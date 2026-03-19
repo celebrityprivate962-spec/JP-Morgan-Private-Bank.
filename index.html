@@ -48,181 +48,383 @@
             background-color: #002D72;
             color: white;
         }
+        
+        /* Login Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-modal {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-modal h2 {
+            color: #002D72;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius;
+            font-size: 1rem;
+        }
+        
+        .login-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #002D72;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .login-form button:hover {
+            background-color: #1e40af;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <svg class="h-8 w-auto" viewBox="0 0 100 40" 
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 20h80v15H10z" fill="#002D72"/>
-                        <text x="50" y="32" font-family="Arial, sans-serif" 
-                              font-size="16" fill="white" text-anchor="middle">
-                            JPMORGAN
-                        </text>
-                    </svg>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="login-modal">
+            <h2>Login to J.P. Morgan Private Bank</h2>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
-                
-                <!-- Navigation -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Accounts
-                    </a>
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Investments
-                    </a>
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Transfers
-                    </a>
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Payments
-                    </a>
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Messages
-                    </a>
-                    <a href="#" class="jpm-nav-link text-gray-700 
-                       hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
-                       border-b-2 border-transparent">
-                        Support
-                    </a>
-                </nav>
-                
-                <!-- Right side -->
-                <div class="flex items-center space-x-4">
-                    <select class="text-sm text-gray-700 bg-gray-100 
-                           border-none rounded-md px-3 py-1 focus:outline-none">
-                        <option>Private Bank Account</option>
-                        <option>Wealth Management</option>
-                        <option>Investment Account</option>
-                    </select>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-blue-600 rounded-full 
-                            flex items-center justify-center">
-                            <span class="text-white text-sm font-medium">JM</span>
-                        </div>
-                        <span class="text-sm text-gray-700 hidden sm:block">
-                            Jason M.
-                        </span>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div id="errorMessage" class="error-message">
+                    Invalid username or password. Please try again.
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content (Initially Hidden) -->
+    <div id="mainContent" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <svg class="h-8 w-auto" viewBox="0 0 100 40" 
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 20h80v15H10z" fill="#002D72"/>
+                            <text x="50" y="32" font-family="Arial, sans-serif" 
+                                  font-size="16" fill="white" text-anchor="middle">
+                                JPMORGAN
+                            </text>
+                        </svg>
                     </div>
-                    <button class="text-gray-700 hover:text-red-600">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
+                    
+                    <!-- Navigation -->
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Accounts
+                        </a>
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Investments
+                        </a>
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Transfers
+                        </a>
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Payments
+                        </a>
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Messages
+                        </a>
+                        <a href="#" class="jpm-nav-link text-gray-700 
+                           hover:text-[#C5A46E] px-1 py-2 text-sm font-medium 
+                           border-b-2 border-transparent">
+                            Support
+                        </a>
+                    </nav>
+                    
+                    <!-- Right side -->
+                    <div class="flex items-center space-x-4">
+                        <select class="text-sm text-gray-700 bg-gray-100 
+                               border-none rounded-md px-3 py-1 focus:outline-none">
+                            <option>Private Bank Account</option>
+                            <option>Wealth Management</option>
+                            <option>Investment Account</option>
+                        </select>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full 
+                                flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">JM</span>
+                            </div>
+                            <span class="text-sm text-gray-700 hidden sm:block">
+                                Jason M.
+                            </span>
+                        </div>
+                        <button id="logoutBtn" class="text-gray-700 hover:text-red-600">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="flex flex-col lg:flex-row gap-6">
-            <!-- Sidebar -->
-            <aside class="w-full lg:w-64 bg-white rounded-lg shadow-sm p-6 h-fit">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                    Account Overview
-                </h3>
-                <div class="space-y-2">
-                    <a href="#" class="jpm-sidebar-link block px-3 py-2 
-                       text-sm text-gray-700 rounded-md hover:bg-blue-50 
-                       hover:text-[#C5A46E] transition-colors">
-                        Portfolio
-                    </a>
-                    <a href="#" class="jpm-sidebar-link block px-3 py-2 
-                       text-sm text-gray-700 rounded-md hover:bg-blue-50 
-                       hover:text-[#C5A46E] transition-colors">
-                        Transactions
-                    </a>
-                    <a href="#" class="jpm-sidebar-link block px-3 py-2 
-                       text-sm text-gray-700 rounded-md hover:bg-blue-50 
-                       hover:text-[#C5A46E] transition-colors">
-                        Documents
-                    </a>
-                    <a href="#" class="jpm-sidebar-link block px-3 py-2 
-                       text-sm text-gray-700 rounded-md hover:bg-blue-50 
-                       hover:text-[#C5A46E] transition-colors">
-                        Advisor
-                    </a>
-                    <a href="#" class="jpm-sidebar-link block px-3 py-2 
-                       text-sm text-gray-700 rounded-md hover:bg-blue-50 
-                       hover:text-[#C5A46E] transition-colors">
-                        Settings
-                    </a>
-                </div>
-                
-                <div class="mt-6 pt-6 border-t border-gray-200">
-                    <h4 class="text-sm font-medium text-gray-900 mb-2">
-                        Balance Summary
-                    </h4>
-                    <p class="text-sm text-gray-600">$1,238,450.00</p>
-                    <p class="text-xs text-gray-500 mt-1">Available Cash</p>
-                </div>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="flex-1">
-                <!-- Welcome Banner -->
-                <div class="bg-gradient-to-r from-[#002D72] to-blue-800 
-                    rounded-lg p-6 mb-6 text-white">
-                    <h1 class="text-2xl font-bold">
-                        Welcome, Jason Namakaehaa Momoa
-                    </h1>
-                    <p class="text-blue-100 mt-1">
-                        J.P. Morgan Private Bank Account • PB-9876543210
-                    </p>
-                </div>
-
-                <!-- Balance Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="balance-card bg-white rounded-lg shadow-sm 
-                        p-6 border border-gray-200">
-                        <h3 class="text-sm font-medium text-gray-500 mb-1">
-                            Total Portfolio Value
-                        </h3>
-                        <p class="text-2xl font-bold text-gray-900">
-                            $4,872,945.67
-                        </p>
-                        <p class="text-green-600 text-sm mt-1">▲ +12.4% YTD</p>
-                    </div>
-                    <div class="balance-card bg-white rounded-lg shadow-sm 
-                        p-6 border border-gray-200">
-                        <h3 class="text-sm font-medium text-gray-500 mb-1">
-                            Available Cash
-                        </h3>
-                        <p class="text-2xl font-bold text-gray-900">
-                            $1,238,450.00
-                        </p>
-                        <p class="text-gray-500 text-sm mt-1">USD</p>
-                    </div>
-                    <div class="balance-card bg-white rounded-lg shadow-sm 
-                        p-6 border border-gray-200">
-                        <h3 class="text-sm font-medium text-gray-500 mb-1">
-                            YTD Return
-                        </h3>
-                        <p class="text-2xl font-bold text-green-600">+12.4%</p>
-                        <p class="text-gray-500 text-sm mt-1">vs. benchmark</p>
-                    </div>
-                </div>
-
-                <!-- Portfolio Allocation -->
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-8 
-                    border border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- Sidebar -->
+                <aside class="w-full lg:w-64 bg-white rounded-lg shadow-sm p-6 h-fit">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        Portfolio Allocation
+                        Account Overview
                     </h3>
-                    <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="w-full lg:w-1/2">
+                    <div class="space-y-2">
+                        <a href="#" class="jpm-sidebar-link block px-3 py-2 
+                           text-sm text-gray-700 rounded-md hover:bg-blue-50 
+                           hover:text-[#C5A46E] transition-colors">
+                            Portfolio
+                        </a>
+                        <a href="#" class="jpm-sidebar-link block px-3 py-2 
+                           text-sm text-gray-700 rounded-md hover:bg-blue-50 
+                           hover:text-[#C5A46E] transition-colors">
+                            Transactions
+                        </a>
+                        <a href="#" class="jpm-sidebar-link block px-3 py-2 
+                           text-sm text-gray-700 rounded-md hover:bg-blue-50 
+                           hover:text-[#C5A46E] transition-colors">
+                            Documents
+                        </a>
+                        <a href="#" class="jpm-sidebar-link block px-3 py-2 
+                           text-sm text-gray-700 rounded-md hover:bg-blue-50 
+                           hover:text-[#C5A46E] transition-colors">
+                            Advisor
+                        </a>
+                        <a href="#" class="jpm-sidebar-link block px-3 py-2 
+                           text-sm text-gray-700 rounded-md hover:bg-blue-50 
+                           hover:text-[#C5A46E] transition-colors">
+                            Settings
+                        </a>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">
+                            Balance Summary
+                        </h4>
+                        <p class="text-sm text-gray-600">$1,238,450.00</p>
+                        <p class="text-xs text-gray-500 mt-1">Available Cash</p>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="flex-1">
+                    <!-- Welcome Banner -->
+                    <div class="bg-gradient-to-r from-[#002D72] to-blue-800 
+                        rounded-lg p-6 mb-6 text-white">
+                        <h1 class="text-2xl font-bold">
+                            Welcome, Jason Namakaehaa Momoa
+                        </h1>
+                        <p class="text-blue-100 mt-1">
+                            J.P. Morgan Private Bank Account • PB-9876543210
+                        </p>
+                    </div>
+
+                    <!-- Balance Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="balance-card bg-white rounded-lg shadow-sm 
+                            p-6 border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">
+                                Total Portfolio Value
+                            </h3>
+                            <p class="text-2xl font-bold text-gray-900">
+                                $4,872,945.67
+                            </p>
+                            <p class="text-green-600 text-sm mt-1">▲ +12.4% YTD</p>
+                        </div>
+                        <div class="balance-card bg-white rounded-lg shadow-sm 
+                            p-6 border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">
+                                Available Cash
+                            </h3>
+                            <p class="text-2xl font-bold text-gray-900">
+                                $1,238,450.00
+                            </p>
+                            <p class="text-gray-500 text-sm mt-1">USD</p>
+                        </div>
+                        <div class="balance-card bg-white rounded-lg shadow-sm 
+                            p-6 border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">
+                                YTD Return
+                            </h3>
+                            <p class="text-2xl font-bold text-green-600">+12.4%</p>
+                            <p class="text-gray-500 text-sm mt-1">vs. benchmark</p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Allocation -->
+                    <div class="bg-sm p-6 mb-8 
+                        border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            Portfolio Allocation
+                        </h3>
+                        <div class="flex flex-col lg:flex-row gap-6">
+                            <div class="w-full lg:w-1/2">
+                                <canvas id="portfolioChart" width="400" 
+                                        height="300"></canvas>
+                            </div>
+                            <div class="w-full lg:w-1/2">
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 bg-blue-500 
+                                                rounded mr-3"></div>
+                                            <span class="text-sm text-gray-700">
+                                                Stocks
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-medium 
+                                              text-gray-900">45%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 bg-green-500 
+                                                rounded mr-3"></div>
+                                            <span class="text-sm text-gray-700">
+                                                Bonds
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-medium 
+                                              text-gray-900">30%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 bg-purple-500 
+                                                rounded mr-3"></div>
+                                            <span class="text-sm text-gray-700">
+                                                Alternatives
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-medium 
+                                              text-gray-900">15%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 bg-yellow-500 
+                                                rounded mr-3"></div>
+                                            <span class="text-sm text-gray-700">
+                                                Cash
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-medium 
+                                              text-gray-900">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction History -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <div class="flex flex-col sm:flex-row justify-between 
+                                items-start sm:items-center gap-4">
+                                <h3 class="text-lg font-semibold text-gray-900">
+                                    Transaction History
+                                </h3>
+                                <div class="flex flex-wrap gap-3 w-full sm:w-auto">
+                                    <input type="text" 
+                                           placeholder="Search transactions..." 
+                                           class="search-input border border-gray-300 
+                                           rounded-md px-3 py-2 text-sm w-full 
+                                           sm:w-64">
+                                    <select class="border border-gray-300 
+                                           rounded-md px-3 py-2 text-sm">
+                                        <option>All Dates</option>
+                                        <option>Last 30 Days</option>
+                                        <option>Last 3 Months</option>
+                                        <option>Last 6 Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <button class="filter-btn active bg-[#002D72] 
+                                       text-white px-3 py-1 rounded text-sm">
+                                    All
+                                </button>
+                                <button class="filter-btn border border-gray-300 
+                                       px-3 py-1 rounded text-sm">
+                                    Deposits
+                                </button>
+                                <button class="filter-btn border border-gray-300 
+                                       px-3 py-1 rounded text-sm">
+                                    Withdrawals
+                                </button>
+                                <button class="filter-btn border border-gray-300 
+                                       px-3 py-1 rounded text-sm">
+                                    Investments
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs 
+                                            font-medium text-gray-500 uppercase 
+                                            tracking-wider">
+                                            Date
+                                        </th>
+                           <div class="w-full lg:w-1/2">
                             <canvas id="portfolioChart" width="400" 
                                     height="300"></canvas>
                         </div>
